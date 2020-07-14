@@ -24,7 +24,6 @@ public class FeatherQueue extends Plugin {
         this.loadConfiguration();
         this.queuePlayerManager = new QueuePlayerManager();
         new QueuePlayerListener();
-
     }
 
     @Override

@@ -17,14 +17,20 @@ public class QueuePlayerListener implements Listener {
 
     @EventHandler
     public void onPostLoginEvent(PostLoginEvent event) {
-        FeatherQueue.getInstance().getQueuePlayerManager().getPlayers().add(new QueuePlayer(event.getPlayer()));
-        FeatherQueue.getInstance().getLogger().log(Level.INFO, "Created QueuePlayer for " + event.getPlayer().getName() + " (" + event.getPlayer().getUniqueId() + ").");
+        if (FeatherQueue.getInstance().getQueuePlayerManager().getPlayers().add(new QueuePlayer(event.getPlayer()))) {
+            FeatherQueue.getInstance().getLogger().log(Level.INFO, "Created QueuePlayer for " + event.getPlayer().getName() + " (" + event.getPlayer().getUniqueId() + ").");
+        } else {
+            FeatherQueue.getInstance().getLogger().log(Level.SEVERE, "Failed to create QueuePlayer for " + event.getPlayer().getName() + " (" + event.getPlayer().getUniqueId() + ").");
+        }
     }
 
     @EventHandler
     public void onPostQuitEvent(PlayerDisconnectEvent event) {
-        FeatherQueue.getInstance().getQueuePlayerManager().getPlayers().remove(FeatherQueue.getInstance().getQueuePlayerManager().getPlayer(event.getPlayer()));
-        FeatherQueue.getInstance().getLogger().log(Level.INFO, "Removed QueuePlayer for " + event.getPlayer().getName() + " (" + event.getPlayer().getUniqueId() + ").");
+        if (FeatherQueue.getInstance().getQueuePlayerManager().getPlayers().remove(FeatherQueue.getInstance().getQueuePlayerManager().getPlayer(event.getPlayer()))) {
+            FeatherQueue.getInstance().getLogger().log(Level.INFO, "Removed QueuePlayer for " + event.getPlayer().getName() + " (" + event.getPlayer().getUniqueId() + ").");
+        } else {
+            FeatherQueue.getInstance().getLogger().log(Level.SEVERE, "Failed to remove QueuePlayer for " + event.getPlayer().getName() + " (" + event.getPlayer().getUniqueId() + ").");
+        }
     }
 
 }
