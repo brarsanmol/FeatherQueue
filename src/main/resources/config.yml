@@ -1,0 +1,16 @@
+queues:
+  alpha:
+    status: CLOSED
+  beta:
+    status: OPEN
+
+messages:
+  queueHelpCommand:
+    - "&7&m--------&r &6Queues &7&m--------"
+    - "&6/queue set status <identifier> <status> &8- &7Set the status of a queue."
+    - "&7&m--------&r &6Queues &7&m--------"
+  queueSetStatusCommand:
+    sameStatus: "&7The queue status for &6%identifier%&7 is already set to &6%status%&7."
+    statusChange: "&7The queue status for &6%identifier% &7has been set to &6%status%."
+    invalidIdentifier: "&7The identifier (&6%identifier%&7) provided is invalid."
+    invalidStatus: "&7The status (&6%status%&7) provided is invalid."

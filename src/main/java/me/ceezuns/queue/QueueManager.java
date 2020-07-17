@@ -26,15 +26,21 @@ public class QueueManager {
             return;
         }
         section.getKeys().forEach(queue -> {
-            if (this.queues.add(new Queue(queue))) {
+            if (this.queues.add(new Queue(queue, QueueStatus.valueOf(section.getString(queue + ".status"))))) {
                 FeatherQueue.getInstance().getLogger().log(Level.INFO, "Successfully loaded the queue " + queue);
             } else {
-                FeatherQueue.getInstance().getLogger().log(Level.SEVERE, "Failed loadeding the queue " + queue);
+                FeatherQueue.getInstance().getLogger().log(Level.SEVERE, "Failed loading the queue " + queue);
             }
         });
     }
 
-
+    public void saveQueues() {
+        FeatherQueue.getInstance().getLogger().log(Level.INFO, "Saving queues...");
+        this.queues.forEach(queue -> {
+            FeatherQueue.getInstance().getConfiguration().set("queues." + queue.getIdentifier() + ".status", queue.getStatus().name());
+        });
+        this.queues.clear();
+    }
 
     public Queue getQueue(String identifier) {
         Preconditions.checkNotNull(identifier, "Identifier cannot be null.");
