@@ -26,6 +26,22 @@ public class QueueCommand extends BaseCommand {
         FeatherQueue.getInstance().getConfiguration().getStringList("messages.queueHelpCommand").forEach(line -> sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', line))));
     }
 
+    @Subcommand("set size")
+    @CommandCompletion("@queues")
+    @CommandPermission("queue.set.size")
+    public static void onSetSizeCommand(CommandSender sender, String identifier, int maximumQueueSize) {
+        if (FeatherQueue.getInstance().getQueueManager().getQueue(identifier) == null) {
+            sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', FeatherQueue.getInstance().getConfiguration().getString("messages.queueSetSizeCommand.invalidIdentifier").replaceAll("%identifier%", identifier))));
+        } else if (maximumQueueSize < 0) {
+            sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', FeatherQueue.getInstance().getConfiguration().getString("messages.queueSetSizeCommand.invalidSize").replaceAll("%size%", String.valueOf(maximumQueueSize)))));
+        } else if (FeatherQueue.getInstance().getQueueManager().getQueue(identifier).getMaximumQueueSize() == maximumQueueSize) {
+            sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', FeatherQueue.getInstance().getConfiguration().getString("messages.queueSetSizeCommand.sameSize").replaceAll("%size%", String.valueOf(maximumQueueSize)).replaceAll("%identifier%", identifier))));
+        } else {
+            FeatherQueue.getInstance().getQueueManager().getQueue(identifier).setMaximumQueueSize(maximumQueueSize);
+            sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', FeatherQueue.getInstance().getConfiguration().getString("messages.queueSetSizeCommand.sizeChange").replaceAll("%identifier%", identifier).replaceAll("%size%", String.valueOf(maximumQueueSize)))));
+        }
+    }
+
     @Subcommand("set status")
     @CommandCompletion("@queues @queue-statuses")
     @CommandPermission("queue.set.status")
