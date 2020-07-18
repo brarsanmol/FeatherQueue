@@ -2,14 +2,17 @@ queues:
   alpha:
     status: CLOSED
     maximumQueueSize: 0
+    positionNotificationTaskDelay: 5
   beta:
     status: OPEN
     maximumQueueSize: 0
+    positionNotificationTaskDelay: 5
 
 priorities:
   alpha:
     permission: alpha.beta
     weight: 1
+
 messages:
   queueHelpCommand:
     - '&7&m--------&r &6Queues &7&m--------'
@@ -22,7 +25,7 @@ messages:
     - '&7&m--------&r &6Queues &7&m--------'
   queueJoinCommand:
     invalidIdentifier: '&7The identifier (&6%identifier%&7) provided is invalid.'
-    alreadyQueued: '&7You are already in queue for &6%identifier&7.'
+    alreadyQueued: '&7You are already in queue for &6%identifier%&7.'
     joinedQueue: '&7You have been queued for &6%identifier%&7.'
   queueLeaveCommand:
     notQueued: '&7You are currently not queued.'
@@ -42,3 +45,4 @@ messages:
     samePermission: '&7The permission for &6%identifier%&7 is already set to &6%permission%&7.'
     permissionChange: '&7The permission for &6%identifier% &7has been set to &6%permission%&7.'
     invalidIdentifier: '&7The identifier (&6%identifier%&7) provided is invalid.'
+  positionTask: '&7You are in position &6%position%&7 of &6%size%&7 for &6%identifier%&7.'

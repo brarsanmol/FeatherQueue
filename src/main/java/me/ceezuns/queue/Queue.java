@@ -3,9 +3,9 @@ package me.ceezuns.queue;
 import com.google.common.base.Preconditions;
 import me.ceezuns.FeatherQueue;
 import me.ceezuns.queue.player.QueuePlayer;
+import me.ceezuns.queue.tasks.QueuePositionTask;
 import net.md_5.bungee.api.config.ServerInfo;
 
-import java.util.Comparator;
 import java.util.concurrent.PriorityBlockingQueue;
 import java.util.logging.Level;
 
@@ -14,15 +14,19 @@ public class Queue {
     private String identifier;
     private QueueStatus status;
     private int maximumQueueSize;
+    private int positionTaskDelay;
     private ServerInfo server;
     private PriorityBlockingQueue<QueuePlayer> players;
+    private QueuePositionTask positionTask;
 
-    public Queue(String identifier, QueueStatus status, int maximumQueueSize) {
+    public Queue(String identifier, QueueStatus status, int maximumQueueSize, int positionTaskDelay) {
         this.identifier = identifier;
         this.status = status;
         this.maximumQueueSize = maximumQueueSize;
+        this.positionTaskDelay = positionTaskDelay;
         this.server = FeatherQueue.getInstance().getProxy().getServerInfo(identifier);
         this.players = new PriorityBlockingQueue<>();
+        this.positionTask = new QueuePositionTask(this);
     }
 
     public String getIdentifier() {
@@ -45,6 +49,16 @@ public class Queue {
 
     public int getMaximumQueueSize() {
         return maximumQueueSize;
+    }
+
+    public int getPositionTaskDelay() {
+        return positionTaskDelay;
+    }
+
+    public void setPositionTaskDelay(int positionTaskDelay) {
+        Preconditions.checkNotNull(positionTaskDelay, "Position Task Delay cannot be null.");
+        Preconditions.checkArgument(positionTaskDelay >= 0, "Position Task Delay Cannot Be Negative.");
+        this.positionTaskDelay = positionTaskDelay;
     }
 
     public void setMaximumQueueSize(int maximumQueueSize) {
