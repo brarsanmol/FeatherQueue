@@ -7,6 +7,7 @@ import me.ceezuns.FeatherQueue;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -26,6 +27,33 @@ public class QueueCommand extends BaseCommand {
     @HelpCommand
     public static void onHelpCommand(CommandSender sender) {
         FeatherQueue.getInstance().getConfiguration().getStringList("messages.queueHelpCommand").forEach(line -> sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', line))));
+    }
+
+    @Subcommand("join")
+    @CommandCompletion("@queues")
+    @CommandPermission("queue.join")
+    public static void onJoinCommand(ProxiedPlayer sender, String identifier) {
+        if (FeatherQueue.getInstance().getQueueManager().getQueue(identifier) == null) {
+            sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', FeatherQueue.getInstance().getConfiguration().getString("messages.queueJoinCommand.invalidIdentifier").replaceAll("%identifier%", identifier))));
+        } else if (FeatherQueue.getInstance().getQueuePlayerManager().getPlayer(sender).isQueued()) {
+            sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', FeatherQueue.getInstance().getConfiguration().getString("messages.queueJoinCommand.alreadyQueued").replaceAll("%identifier%", FeatherQueue.getInstance().getQueuePlayerManager().getPlayer(sender).getQueue().getIdentifier()))));
+        } else {
+            FeatherQueue.getInstance().getQueuePlayerManager().getPlayer(sender).setQueue(FeatherQueue.getInstance().getQueueManager().getQueue(identifier));
+            FeatherQueue.getInstance().getQueueManager().getQueue(identifier).addPlayer(FeatherQueue.getInstance().getQueuePlayerManager().getPlayer(sender));
+            sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', FeatherQueue.getInstance().getConfiguration().getString("messages.queueJoinCommand.joinedQueue").replaceAll("%identifier%", identifier))));
+        }
+    }
+
+    @Subcommand("leave")
+    @CommandPermission("queue.leave")
+    public static void onLeaveCommand(ProxiedPlayer sender) {
+        if (FeatherQueue.getInstance().getQueuePlayerManager().getPlayer(sender).isQueued()) {
+            sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', FeatherQueue.getInstance().getConfiguration().getString("messages.queueLeaveCommand.leftQueue").replaceAll("%identifier%", FeatherQueue.getInstance().getQueuePlayerManager().getPlayer(sender).getQueue().getIdentifier()))));
+            FeatherQueue.getInstance().getQueuePlayerManager().getPlayer(sender).getQueue().removePlayer(FeatherQueue.getInstance().getQueuePlayerManager().getPlayer(sender));
+            FeatherQueue.getInstance().getQueuePlayerManager().getPlayer(sender).setQueue(null);
+        } else {
+            sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', FeatherQueue.getInstance().getConfiguration().getString("messages.queueLeaveCommand.notQueued"))));
+        }
     }
 
     @Subcommand("set size")
