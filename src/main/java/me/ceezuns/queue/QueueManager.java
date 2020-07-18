@@ -18,7 +18,7 @@ public class QueueManager {
         this.loadQueues();
     }
 
-    private void loadQueues() {
+    public void loadQueues() {
         FeatherQueue.getInstance().getLogger().log(Level.INFO, "Loading queues...");
         Configuration section = FeatherQueue.getInstance().getConfiguration().getSection("queues");
         if (section == null) {

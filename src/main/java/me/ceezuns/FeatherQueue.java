@@ -1,11 +1,11 @@
 package me.ceezuns;
 
 import co.aikar.commands.BungeeCommandManager;
-import me.ceezuns.queue.Queue;
 import me.ceezuns.queue.QueueCommand;
 import me.ceezuns.queue.QueueManager;
 import me.ceezuns.queue.player.QueuePlayerListener;
 import me.ceezuns.queue.player.QueuePlayerManager;
+import me.ceezuns.queue.QueuePriorityManager;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
@@ -15,7 +15,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.logging.Level;
-import java.util.stream.Collectors;
 
 public class FeatherQueue extends Plugin {
 
@@ -23,6 +22,7 @@ public class FeatherQueue extends Plugin {
     private BungeeCommandManager commandManager;
     private Configuration configuration;
     private QueueManager queueManager;
+    private QueuePriorityManager queuePriorityManager;
     private QueuePlayerManager queuePlayerManager;
 
     @Override
@@ -31,6 +31,7 @@ public class FeatherQueue extends Plugin {
         this.commandManager = new BungeeCommandManager(this);
         this.loadConfiguration();
         this.queueManager = new QueueManager();
+        this.queuePriorityManager = new QueuePriorityManager();
         this.queuePlayerManager = new QueuePlayerManager();
         new QueuePlayerListener();
         new QueueCommand();
@@ -39,6 +40,7 @@ public class FeatherQueue extends Plugin {
     @Override
     public void onDisable() {
         this.queueManager.saveQueues();
+        this.queuePriorityManager.savePriorities();
         this.saveConfiguration();
         instance = null;
     }
@@ -86,6 +88,10 @@ public class FeatherQueue extends Plugin {
 
     public QueueManager getQueueManager() {
         return queueManager;
+    }
+
+    public QueuePriorityManager getQueuePriorityManager() {
+        return queuePriorityManager;
     }
 
     public QueuePlayerManager getQueuePlayerManager() {

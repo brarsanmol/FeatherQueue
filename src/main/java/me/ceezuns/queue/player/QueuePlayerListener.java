@@ -17,7 +17,7 @@ public class QueuePlayerListener implements Listener {
 
     @EventHandler
     public void onPostLoginEvent(PostLoginEvent event) {
-        if (FeatherQueue.getInstance().getQueuePlayerManager().getPlayers().add(new QueuePlayer(event.getPlayer()))) {
+        if (FeatherQueue.getInstance().getQueuePlayerManager().getPlayers().add(new QueuePlayer(event.getPlayer(), FeatherQueue.getInstance().getQueuePriorityManager().getPriorityForPlayer(event.getPlayer())))) {
             FeatherQueue.getInstance().getLogger().log(Level.INFO, "Created QueuePlayer for " + event.getPlayer().getName() + " (" + event.getPlayer().getUniqueId() + ").");
         } else {
             FeatherQueue.getInstance().getLogger().log(Level.SEVERE, "Failed to create QueuePlayer for " + event.getPlayer().getName() + " (" + event.getPlayer().getUniqueId() + ").");

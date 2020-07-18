@@ -4,19 +4,29 @@ queues:
   beta:
     status: OPEN
 
+priorities:
+  alpha:
+    permission: "alpha.beta"
+    weight: 1
+
 messages:
   queueHelpCommand:
     - "&7&m--------&r &6Queues &7&m--------"
     - "&6/queue set size <identifier> <size> &8- &7Set the maximum size of the queue."
     - "&6/queue set status <identifier> <status> &8- &7Set the status of a queue."
+    - "&6/queue set priority permission <identifier> <permission> &8- &7Set the permission for a queue priority."
     - "&7&m--------&r &6Queues &7&m--------"
   queueSetStatusCommand:
     sameStatus: "&7The queue status for &6%identifier%&7 is already set to &6%status%&7."
-    statusChange: "&7The queue status for &6%identifier% &7has been set to &6%status%."
+    statusChange: "&7The queue status for &6%identifier% &7has been set to &6%status%&7."
     invalidIdentifier: "&7The identifier (&6%identifier%&7) provided is invalid."
     invalidStatus: "&7The status (&6%status%&7) provided is invalid."
   queueSetSizeCommand:
     sameSize: "&7The queue size for &6%identifier%&7 is already set to &6%size%&7."
-    sizeChange: "&7The queue size for &6%identifier% &7has been set to &6%size%."
+    sizeChange: "&7The queue size for &6%identifier% &7has been set to &6%size%&7."
     invalidIdentifier: "&7The identifier (&6%identifier%&7) provided is invalid."
     invalidSize: "&7The size (&6%size%&7) provided is invalid, please ensure it is not negative."
+  queueSetPriorityPermissionCommand:
+    samePermission: "&7The permission for &6%identifier%&7 is already set to &6%permission%&7."
+    permissionChange: "&7The permission for &6%identifier% &7has been set to &6%permission%&7."
+    invalidIdentifier: "&7The identifier (&6%identifier%&7) provided is invalid."

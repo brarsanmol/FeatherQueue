@@ -17,6 +17,8 @@ public class QueueCommand extends BaseCommand {
     public QueueCommand() {
         FeatherQueue.getInstance().getCommandManager().getCommandCompletions().registerAsyncCompletion("queues", callback -> FeatherQueue.getInstance().getQueueManager().getQueues().parallelStream().map(Queue::getIdentifier).collect(Collectors.toList()));
         FeatherQueue.getInstance().getCommandManager().getCommandCompletions().registerAsyncCompletion("queue-statuses", callback -> Arrays.stream(QueueStatus.values()).parallel().map(QueueStatus::name).collect(Collectors.toList()));
+        FeatherQueue.getInstance().getCommandManager().getCommandCompletions().registerAsyncCompletion("queue-priorities", callback -> FeatherQueue.getInstance().getQueuePriorityManager().getPriorities().parallelStream().map(QueuePriority::getIdentifier).collect(Collectors.toList()));
+        FeatherQueue.getInstance().getCommandManager().getCommandCompletions().registerAsyncCompletion("queue-priorities-by-permission", callback -> FeatherQueue.getInstance().getQueuePriorityManager().getPriorities().parallelStream().map(QueuePriority::getPermission).collect(Collectors.toList()));
         FeatherQueue.getInstance().getCommandManager().registerCommand(this);
     }
 
@@ -55,6 +57,20 @@ public class QueueCommand extends BaseCommand {
         } else {
             FeatherQueue.getInstance().getQueueManager().getQueue(identifier).setStatus(QueueStatus.valueOf(status.toUpperCase()));
             sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', FeatherQueue.getInstance().getConfiguration().getString("messages.queueSetStatusCommand.statusChange").replaceAll("%identifier%", identifier).replaceAll("%status%", status))));
+        }
+    }
+
+    @Subcommand("set priority permission")
+    @CommandCompletion("@queue-priorities @queue-priorities-by-permission")
+    @CommandPermission("queue.set.priority.permission")
+    public static void onSetPriorityPermissionCommand(CommandSender sender, String identifier, String permission) {
+        if (FeatherQueue.getInstance().getQueuePriorityManager().getPriority(identifier) == null) {
+            sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', FeatherQueue.getInstance().getConfiguration().getString("messages.queueSetPriorityPermissionCommand.invalidIdentifier").replaceAll("%identifier%", identifier))));
+        } else if (FeatherQueue.getInstance().getQueuePriorityManager().getPriority(identifier).getPermission().equals(permission)) {
+            sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', FeatherQueue.getInstance().getConfiguration().getString("messages.queueSetPriorityPermissionCommand.samePermission").replaceAll("%identifier%", identifier).replaceAll("%permission%", permission))));
+        } else {
+            FeatherQueue.getInstance().getQueuePriorityManager().getPriority(identifier).setPermission(permission);
+            sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', FeatherQueue.getInstance().getConfiguration().getString("messages.queueSetPriorityPermissionCommand.permissionChange").replaceAll("%identifier%", identifier).replaceAll("%permission%", permission))));
         }
     }
 
