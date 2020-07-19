@@ -22,16 +22,16 @@ public class QueuePlayer implements Comparable<QueuePlayer> {
     }
 
     public int getPositionInQueue() {
-        int index = -1;
         if (this.isQueued()) {
+            int index = 0;
             for (QueuePlayer target : this.queue.getPlayers()) {
                 if (target.equals(this)) {
-                    index++;
-                    break;
+                    return index;
                 }
+                index++;
             }
         }
-        return index;
+        return -1;
     }
 
     public ProxiedPlayer getPlayer() {
