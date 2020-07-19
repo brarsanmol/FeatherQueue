@@ -18,6 +18,6 @@ public class QueuePositionTask implements Runnable {
 
     @Override
     public void run() {
-        this.queue.getPlayers().forEach(player -> player.getPlayer().sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', FeatherQueue.getInstance().getConfiguration().getString("messages.positionTask").replaceAll("%identifier%", this.queue.getIdentifier()).replaceAll("%position%", String.valueOf(player.getPositionInQueue())).replaceAll("%size%", String.valueOf(this.queue.getPlayers().size()))))));
+        this.queue.getPlayers().forEach(player -> player.getPlayer().sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', FeatherQueue.getInstance().getConfiguration().getString("messages.positionTask").replaceAll("%identifier%", this.queue.getIdentifier()).replaceAll("%position%", String.valueOf(player.getPositionInQueue() + 1)).replaceAll("%size%", String.valueOf(this.queue.getPlayers().size()))))));
     }
 }

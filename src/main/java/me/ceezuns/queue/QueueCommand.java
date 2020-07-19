@@ -2,7 +2,6 @@ package me.ceezuns.queue;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
-import com.google.common.base.Enums;
 import me.ceezuns.FeatherQueue;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
@@ -37,6 +36,8 @@ public class QueueCommand extends BaseCommand {
             sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', FeatherQueue.getInstance().getConfiguration().getString("messages.queueJoinCommand.invalidIdentifier").replaceAll("%identifier%", identifier))));
         } else if (FeatherQueue.getInstance().getQueuePlayerManager().getPlayer(sender).isQueued()) {
             sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', FeatherQueue.getInstance().getConfiguration().getString("messages.queueJoinCommand.alreadyQueued").replaceAll("%identifier%", FeatherQueue.getInstance().getQueuePlayerManager().getPlayer(sender).getQueue().getIdentifier()))));
+        } else if (sender.getServer().getInfo().equals(FeatherQueue.getInstance().getQueueManager().getQueue(identifier).getServer())) {
+            sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', FeatherQueue.getInstance().getConfiguration().getString("messages.queueJoinCommand.sameServer").replaceAll("%identifier%", sender.getServer().getInfo().getName()))));
         } else {
             FeatherQueue.getInstance().getQueuePlayerManager().getPlayer(sender).setQueue(FeatherQueue.getInstance().getQueueManager().getQueue(identifier));
             FeatherQueue.getInstance().getQueueManager().getQueue(identifier).addPlayer(FeatherQueue.getInstance().getQueuePlayerManager().getPlayer(sender));

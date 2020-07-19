@@ -26,7 +26,7 @@ public class QueueManager {
             return;
         }
         section.getKeys().forEach(queue -> {
-            if (this.queues.add(new Queue(queue, QueueStatus.valueOf(section.getString(queue + ".status")), section.getInt(queue + ".maximumQueueSize"), section.getInt(queue +".positionNotificationTaskDelay")))) {
+            if (this.queues.add(new Queue(queue, QueueStatus.valueOf(section.getString(queue + ".status")), section.getInt(queue + ".maximumQueueSize"), section.getInt(queue +".positionTaskDelay"), section.getInt(queue + ".pushTaskDelay")))) {
                 FeatherQueue.getInstance().getLogger().log(Level.INFO, "Successfully loaded the queue " + queue);
             } else {
                 FeatherQueue.getInstance().getLogger().log(Level.SEVERE, "Failed loading the queue " + queue);
