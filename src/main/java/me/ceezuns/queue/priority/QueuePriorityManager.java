@@ -1,4 +1,4 @@
-package me.ceezuns.queue;
+package me.ceezuns.queue.priority;
 
 import com.google.common.base.Preconditions;
 import me.ceezuns.FeatherQueue;
@@ -54,7 +54,7 @@ public class QueuePriorityManager {
         return this.priorities.stream().filter(priority -> player.hasPermission(priority.getPermission())).findFirst().orElse(null);
     }
 
-    protected List<QueuePriority> getPriorities() {
+    public List<QueuePriority> getPriorities() {
         return priorities;
     }
 }

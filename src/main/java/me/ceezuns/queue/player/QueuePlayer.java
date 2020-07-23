@@ -1,12 +1,9 @@
 package me.ceezuns.queue.player;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Streams;
 import me.ceezuns.queue.Queue;
-import me.ceezuns.queue.QueuePriority;
+import me.ceezuns.queue.priority.QueuePriority;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
-
-import java.util.stream.IntStream;
 
 public class QueuePlayer implements Comparable<QueuePlayer> {
 

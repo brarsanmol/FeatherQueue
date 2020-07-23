@@ -3,6 +3,7 @@ package me.ceezuns.queue;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import me.ceezuns.FeatherQueue;
+import me.ceezuns.queue.priority.QueuePriority;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -38,6 +39,12 @@ public class QueueCommand extends BaseCommand {
             sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', FeatherQueue.getInstance().getConfiguration().getString("messages.queueJoinCommand.alreadyQueued").replaceAll("%identifier%", FeatherQueue.getInstance().getQueuePlayerManager().getPlayer(sender).getQueue().getIdentifier()))));
         } else if (sender.getServer().getInfo().equals(FeatherQueue.getInstance().getQueueManager().getQueue(identifier).getServer())) {
             sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', FeatherQueue.getInstance().getConfiguration().getString("messages.queueJoinCommand.sameServer").replaceAll("%identifier%", sender.getServer().getInfo().getName()))));
+        }  else if (sender.hasPermission("featherqueue.bypass")) {
+            sender.connect(FeatherQueue.getInstance().getQueueManager().getQueue(identifier).getServer());
+        } else if (FeatherQueue.getInstance().getQueueManager().getQueue(identifier).getStatus() == QueueStatus.CLOSED) {
+            sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', FeatherQueue.getInstance().getConfiguration().getString("messages.queueJoinCommand.closedQueue").replaceAll("%identifier%", sender.getServer().getInfo().getName()))));
+        } else if (FeatherQueue.getInstance().getQueueManager().getQueue(identifier).getPlayers().size() + 1 > FeatherQueue.getInstance().getQueueManager().getQueue(identifier).getMaximumQueueSize()) {
+            sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', FeatherQueue.getInstance().getConfiguration().getString("messages.queueJoinCommand.maximumQueueSizeExceeded").replaceAll("%identifier%", sender.getServer().getInfo().getName()))));
         } else {
             FeatherQueue.getInstance().getQueuePlayerManager().getPlayer(sender).setQueue(FeatherQueue.getInstance().getQueueManager().getQueue(identifier));
             FeatherQueue.getInstance().getQueueManager().getQueue(identifier).addPlayer(FeatherQueue.getInstance().getQueuePlayerManager().getPlayer(sender));

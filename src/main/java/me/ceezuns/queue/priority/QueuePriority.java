@@ -1,4 +1,4 @@
-package me.ceezuns.queue;
+package me.ceezuns.queue.priority;
 
 import com.google.common.base.Preconditions;
 import me.ceezuns.FeatherQueue;

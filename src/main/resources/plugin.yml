@@ -2,3 +2,4 @@ name: FeatherQueue
 main: me.ceezuns.FeatherQueue
 author: ceezuns
 version: 1.0
+description: A Lightweight Bungeecord Player Queue

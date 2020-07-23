@@ -5,7 +5,7 @@ import me.ceezuns.queue.QueueCommand;
 import me.ceezuns.queue.QueueManager;
 import me.ceezuns.queue.player.QueuePlayerListener;
 import me.ceezuns.queue.player.QueuePlayerManager;
-import me.ceezuns.queue.QueuePriorityManager;
+import me.ceezuns.queue.priority.QueuePriorityManager;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;

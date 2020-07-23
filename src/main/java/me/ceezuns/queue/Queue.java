@@ -64,36 +64,36 @@ public class Queue {
         this.status = status;
     }
 
-    public void setPositionTaskDelay(int positionTaskDelay) {
-        Preconditions.checkNotNull(positionTaskDelay, "Position Task Delay cannot be null.");
-        Preconditions.checkArgument(positionTaskDelay >= 0, "Position Task Delay Cannot Be Negative.");
-        this.positionTaskDelay = positionTaskDelay;
-    }
-
-    public void setPushTaskDelay(int pushTaskDelay) {
-        Preconditions.checkNotNull(pushTaskDelay, "Push Task Delay cannot be null.");
-        Preconditions.checkArgument(pushTaskDelay >= 0, "Push Task Delay Cannot Be Negative.");
-        this.pushTaskDelay = pushTaskDelay;
-    }
-
     public void setMaximumQueueSize(int maximumQueueSize) {
         Preconditions.checkNotNull(maximumQueueSize, "Maximum Queue Size cannot be null.");
         Preconditions.checkArgument(maximumQueueSize >= 0, "Maximum Queue Size Cannot Be Negative.");
-        FeatherQueue.getInstance().getLogger().log(Level.INFO, "Changed maximum queue size for " + this.getIdentifier() + " from " + this.maximumQueueSize + " to " + maximumQueueSize);
+        FeatherQueue.getInstance().getLogger().log(Level.INFO, "Changed maximum queue size for " + this.identifier + " from " + this.maximumQueueSize + " to " + maximumQueueSize);
         this.maximumQueueSize = maximumQueueSize;
     }
 
+    // Should we check if the player is successfully added?
     public boolean addPlayer(QueuePlayer player) {
         Preconditions.checkNotNull(player, "Queue Player cannot be null.");
+        FeatherQueue.getInstance().getLogger().log(Level.INFO, "Added " + player.getPlayer().getName() + " (" + player.getPlayer().getUniqueId() + ") from " + this.identifier);
         return this.players.add(player);
     }
 
+    // Should we check if the player is successfully removed?
     public boolean removePlayer(QueuePlayer player) {
         Preconditions.checkNotNull(player, "Queue Player cannot be null.");
+        FeatherQueue.getInstance().getLogger().log(Level.INFO, "Removed " + player.getPlayer().getName() + " (" + player.getPlayer().getUniqueId() + ") from " + this.identifier);
         return this.players.remove(player);
     }
 
     public PriorityBlockingQueue<QueuePlayer> getPlayers() {
         return players;
+    }
+
+    public QueuePositionTask getPositionTask() {
+        return positionTask;
+    }
+
+    public QueuePushTask getPushTask() {
+        return pushTask;
     }
 }

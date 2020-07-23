@@ -39,6 +39,8 @@ public class QueueManager {
         this.queues.forEach(queue -> {
             FeatherQueue.getInstance().getConfiguration().set("queues." + queue.getIdentifier() + ".status", queue.getStatus().name());
             FeatherQueue.getInstance().getConfiguration().set("queues." + queue.getIdentifier() + ".maximumQueueSize", queue.getMaximumQueueSize());
+            queue.getPositionTask().cancel();
+            queue.getPushTask().cancel();
         });
         this.queues.clear();
     }
@@ -48,7 +50,7 @@ public class QueueManager {
         return this.queues.stream().filter(queue -> queue.getIdentifier().equalsIgnoreCase(identifier)).findFirst().orElse(null);
     }
 
-    protected List<Queue> getQueues() {
+    public List<Queue> getQueues() {
         return queues;
     }
 }

@@ -25,7 +25,7 @@ public class QueuePlayerListener implements Listener {
     }
 
     @EventHandler
-    public void onPostQuitEvent(PlayerDisconnectEvent event) {
+    public void onPostDisconnectEvent(PlayerDisconnectEvent event) {
         if (FeatherQueue.getInstance().getQueuePlayerManager().getPlayers().remove(FeatherQueue.getInstance().getQueuePlayerManager().getPlayer(event.getPlayer()))) {
             FeatherQueue.getInstance().getLogger().log(Level.INFO, "Removed QueuePlayer for " + event.getPlayer().getName() + " (" + event.getPlayer().getUniqueId() + ").");
         } else {

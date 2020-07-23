@@ -22,7 +22,7 @@ public class QueuePlayerManager {
         return this.players.stream().filter(player -> player.getPlayer().equals(target)).findFirst().orElse(null);
     }
 
-    protected HashSet<QueuePlayer> getPlayers() {
+    public HashSet<QueuePlayer> getPlayers() {
         return players;
     }
 }

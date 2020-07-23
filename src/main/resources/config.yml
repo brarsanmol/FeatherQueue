@@ -1,3 +1,10 @@
+# To bypass the queue, the permission featherqueue.bypass can be used.
+# Task delays are in seconds.
+# Statuses (is case-sensitive):
+# OPEN
+# PAUSED
+# CLOSE
+
 queues:
   alpha:
     status: CLOSED
@@ -22,14 +29,15 @@ messages:
     - '&6/queue leave &8- &7Leave a queue.'
     - '&6/queue set size <identifier> <size> &8- &7Set the maximum size of the queue.'
     - '&6/queue set status <identifier> <status> &8- &7Set the status of a queue.'
-    - '&6/queue set priority permission <identifier> <permission> &8- &7Set the permission
-    for a queue priority.'
+    - '&6/queue set priority permission <identifier> <permission> &8- &7Set the permission for a queue priority.'
     - '&7&m--------&r &6Queues &7&m--------'
   queueJoinCommand:
     invalidIdentifier: '&7The identifier (&6%identifier%&7) provided is invalid.'
     sameServer: '&7You are already connected to &6%identifier%&7.'
     alreadyQueued: '&7You are already in queue for &6%identifier%&7.'
     joinedQueue: '&7You have been queued for &6%identifier%&7.'
+    closedQueue: '&7Sorry! This queue is currently closed, please try again later.'
+    maximumQueueSizeExceeded: '&7Sorry! This queue is full, please try again later.'
   queueLeaveCommand:
     notQueued: '&7You are currently not queued.'
     leftQueue: '&7You have left the queue for &6%identifier%&7.'
@@ -42,8 +50,7 @@ messages:
     sameSize: '&7The queue size for &6%identifier%&7 is already set to &6%size%&7.'
     sizeChange: '&7The queue size for &6%identifier% &7has been set to &6%size%&7.'
     invalidIdentifier: '&7The identifier (&6%identifier%&7) provided is invalid.'
-    invalidSize: '&7The size (&6%size%&7) provided is invalid, please ensure it is
-      not negative.'
+    invalidSize: '&7The size (&6%size%&7) provided is invalid, please ensure it is not negative.'
   queueSetPriorityPermissionCommand:
     samePermission: '&7The permission for &6%identifier%&7 is already set to &6%permission%&7.'
     permissionChange: '&7The permission for &6%identifier% &7has been set to &6%permission%&7.'
