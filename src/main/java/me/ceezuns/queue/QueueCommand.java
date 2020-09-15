@@ -3,6 +3,10 @@ package me.ceezuns.queue;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import me.ceezuns.FeatherQueue;
+import me.ceezuns.queue.events.PlayerQueueJoinEvent;
+import me.ceezuns.queue.events.PlayerQueueLeaveEvent;
+import me.ceezuns.queue.events.PlayerQueuePushEvent;
+import me.ceezuns.queue.events.QueueStatusChangeEvent;
 import me.ceezuns.queue.priority.QueuePriority;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
@@ -16,7 +20,7 @@ import java.util.stream.Collectors;
 public class QueueCommand extends BaseCommand {
 
     public QueueCommand() {
-        FeatherQueue.getInstance().getCommandManager().getCommandCompletions().registerAsyncCompletion("queues", callback -> FeatherQueue.getInstance().getQueueManager().getQueues().parallelStream().map(Queue::getIdentifier).collect(Collectors.toList()));
+        FeatherQueue.getInstance().getCommandManager().getCommandCompletions().registerAsyncCompletion("queues", callback -> FeatherQueue.getInstance().getQueueManager().getQueues().keySet());
         FeatherQueue.getInstance().getCommandManager().getCommandCompletions().registerAsyncCompletion("queue-statuses", callback -> Arrays.stream(QueueStatus.values()).parallel().map(QueueStatus::name).collect(Collectors.toList()));
         FeatherQueue.getInstance().getCommandManager().getCommandCompletions().registerAsyncCompletion("queue-priorities", callback -> FeatherQueue.getInstance().getQueuePriorityManager().getPriorities().parallelStream().map(QueuePriority::getIdentifier).collect(Collectors.toList()));
         FeatherQueue.getInstance().getCommandManager().getCommandCompletions().registerAsyncCompletion("queue-priorities-by-permission", callback -> FeatherQueue.getInstance().getQueuePriorityManager().getPriorities().parallelStream().map(QueuePriority::getPermission).collect(Collectors.toList()));
@@ -48,6 +52,7 @@ public class QueueCommand extends BaseCommand {
         } else {
             FeatherQueue.getInstance().getQueuePlayerManager().getPlayer(sender).setQueue(FeatherQueue.getInstance().getQueueManager().getQueue(identifier));
             FeatherQueue.getInstance().getQueueManager().getQueue(identifier).addPlayer(FeatherQueue.getInstance().getQueuePlayerManager().getPlayer(sender));
+            FeatherQueue.getInstance().getProxy().getPluginManager().callEvent(new PlayerQueueJoinEvent(sender, FeatherQueue.getInstance().getQueuePlayerManager().getPlayer(sender).getQueue()));
             sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', FeatherQueue.getInstance().getConfiguration().getString("messages.queueJoinCommand.joinedQueue").replaceAll("%identifier%", identifier))));
         }
     }
@@ -59,6 +64,7 @@ public class QueueCommand extends BaseCommand {
             sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', FeatherQueue.getInstance().getConfiguration().getString("messages.queueLeaveCommand.leftQueue").replaceAll("%identifier%", FeatherQueue.getInstance().getQueuePlayerManager().getPlayer(sender).getQueue().getIdentifier()))));
             FeatherQueue.getInstance().getQueuePlayerManager().getPlayer(sender).getQueue().removePlayer(FeatherQueue.getInstance().getQueuePlayerManager().getPlayer(sender));
             FeatherQueue.getInstance().getQueuePlayerManager().getPlayer(sender).setQueue(null);
+            FeatherQueue.getInstance().getProxy().getPluginManager().callEvent(new PlayerQueueLeaveEvent(sender, FeatherQueue.getInstance().getQueuePlayerManager().getPlayer(sender).getQueue()));
         } else {
             sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', FeatherQueue.getInstance().getConfiguration().getString("messages.queueLeaveCommand.notQueued"))));
         }
@@ -91,6 +97,7 @@ public class QueueCommand extends BaseCommand {
         } else if (FeatherQueue.getInstance().getQueueManager().getQueue(identifier).getStatus().name().equalsIgnoreCase(status)) {
             sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', FeatherQueue.getInstance().getConfiguration().getString("messages.queueSetStatusCommand.sameStatus").replaceAll("%status%", status).replaceAll("%identifier%", identifier))));
         } else {
+            FeatherQueue.getInstance().getProxy().getPluginManager().callEvent(new QueueStatusChangeEvent(FeatherQueue.getInstance().getQueueManager().getQueue(identifier), FeatherQueue.getInstance().getQueueManager().getQueue(identifier).getStatus(), QueueStatus.valueOf(status.toUpperCase())));
             FeatherQueue.getInstance().getQueueManager().getQueue(identifier).setStatus(QueueStatus.valueOf(status.toUpperCase()));
             sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', FeatherQueue.getInstance().getConfiguration().getString("messages.queueSetStatusCommand.statusChange").replaceAll("%identifier%", identifier).replaceAll("%status%", status))));
         }
