@@ -58,6 +58,3 @@ Here are a few reasons why FeatherQueue was created when solutions already exist
 
 ## Contributors
 * [Anmol Brar](https://www.github.com/brarsanmol)
-
-## License
-Copyright © 2021, Anmol Brar, All Rights Reserved.
