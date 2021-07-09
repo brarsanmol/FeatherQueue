@@ -1,6 +1,6 @@
-package me.ceezuns.queue.player;
+package ca.anmolbrar.queue.player;
 
-import me.ceezuns.FeatherQueue;
+import ca.anmolbrar.FeatherQueue;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
@@ -26,7 +26,12 @@ public class QueuePlayerListener implements Listener {
 
     @EventHandler
     public void onPostDisconnectEvent(PlayerDisconnectEvent event) {
-        if (FeatherQueue.getInstance().getQueuePlayerManager().getPlayers().remove(event.getPlayer().getUniqueId()) != null) {
+        QueuePlayer player = FeatherQueue.getInstance().getQueuePlayerManager().getPlayers().remove(event.getPlayer().getUniqueId());
+        if (player != null) {
+            if (player.isQueued()) {
+                player.getQueue().removePlayer(player);
+                player.setQueue(null);
+            }
             FeatherQueue.getInstance().getLogger().log(Level.INFO, "Removed QueuePlayer for " + event.getPlayer().getName() + " (" + event.getPlayer().getUniqueId() + ").");
         } else {
             FeatherQueue.getInstance().getLogger().log(Level.SEVERE, "Failed to remove QueuePlayer for " + event.getPlayer().getName() + " (" + event.getPlayer().getUniqueId() + ").");

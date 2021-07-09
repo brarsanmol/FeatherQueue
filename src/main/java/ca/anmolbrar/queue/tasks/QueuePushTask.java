@@ -1,10 +1,10 @@
-package me.ceezuns.queue.tasks;
+package ca.anmolbrar.queue.tasks;
 
-import me.ceezuns.FeatherQueue;
-import me.ceezuns.queue.Queue;
-import me.ceezuns.queue.QueueStatus;
-import me.ceezuns.queue.events.PlayerQueuePushEvent;
-import me.ceezuns.queue.player.QueuePlayer;
+import ca.anmolbrar.FeatherQueue;
+import ca.anmolbrar.queue.Queue;
+import ca.anmolbrar.queue.QueueStatus;
+import ca.anmolbrar.queue.events.PlayerQueuePushEvent;
+import ca.anmolbrar.queue.player.QueuePlayer;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ServerConnectRequest;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -31,9 +31,8 @@ public class QueuePushTask implements Runnable {
             player.getPlayer().connect(this.queue.getServer(), (result, error) -> {
                 if (result) {
                     FeatherQueue.getInstance().getProxy().getPluginManager().callEvent(new PlayerQueuePushEvent(player.getPlayer(), player.getQueue()));
-                    player.setQueue(null);
                     player.getPlayer().sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', FeatherQueue.getInstance().getConfiguration().getString("messages.pushTask").replaceAll("%identifier%", this.queue.getIdentifier()))));
-                    this.queue.getPlayers().poll();
+                    this.queue.removePlayer(player);
                 }
             });
         }

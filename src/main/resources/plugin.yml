@@ -1,5 +1,5 @@
 name: FeatherQueue
-main: me.ceezuns.FeatherQueue
-author: ceezuns
-version: 1.3
+main: ca.anmolbrar.FeatherQueue
+author: brarsanmol
+version: 1.4
 description: A Lightweight Bungeecord Player Queue

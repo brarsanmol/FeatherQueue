@@ -1,10 +1,10 @@
-package me.ceezuns.queue;
+package ca.anmolbrar.queue;
 
+import ca.anmolbrar.queue.tasks.QueuePositionTask;
+import ca.anmolbrar.queue.tasks.QueuePushTask;
 import com.google.common.base.Preconditions;
-import me.ceezuns.FeatherQueue;
-import me.ceezuns.queue.player.QueuePlayer;
-import me.ceezuns.queue.tasks.QueuePositionTask;
-import me.ceezuns.queue.tasks.QueuePushTask;
+import ca.anmolbrar.FeatherQueue;
+import ca.anmolbrar.queue.player.QueuePlayer;
 import net.md_5.bungee.api.config.ServerInfo;
 
 import java.util.concurrent.PriorityBlockingQueue;
@@ -82,6 +82,7 @@ public class Queue {
     public boolean removePlayer(QueuePlayer player) {
         Preconditions.checkNotNull(player, "Queue Player cannot be null.");
         FeatherQueue.getInstance().getLogger().log(Level.INFO, "Removed " + player.getPlayer().getName() + " (" + player.getPlayer().getUniqueId() + ") from " + this.identifier);
+        player.setQueue(null);
         return this.players.remove(player);
     }
 

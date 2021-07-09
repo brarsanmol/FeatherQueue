@@ -1,4 +1,4 @@
-package me.ceezuns.queue;
+package ca.anmolbrar.queue;
 
 import java.util.Arrays;
 

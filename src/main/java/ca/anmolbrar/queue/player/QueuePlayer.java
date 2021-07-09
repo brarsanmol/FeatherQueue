@@ -1,8 +1,8 @@
-package me.ceezuns.queue.player;
+package ca.anmolbrar.queue.player;
 
+import ca.anmolbrar.queue.Queue;
+import ca.anmolbrar.queue.priority.QueuePriority;
 import com.google.common.base.Preconditions;
-import me.ceezuns.queue.Queue;
-import me.ceezuns.queue.priority.QueuePriority;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class QueuePlayer implements Comparable<QueuePlayer> {

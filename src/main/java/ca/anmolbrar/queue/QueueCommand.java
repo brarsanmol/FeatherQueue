@@ -1,13 +1,12 @@
-package me.ceezuns.queue;
+package ca.anmolbrar.queue;
 
+import ca.anmolbrar.queue.events.PlayerQueueJoinEvent;
+import ca.anmolbrar.queue.events.PlayerQueueLeaveEvent;
+import ca.anmolbrar.queue.events.QueueStatusChangeEvent;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
-import me.ceezuns.FeatherQueue;
-import me.ceezuns.queue.events.PlayerQueueJoinEvent;
-import me.ceezuns.queue.events.PlayerQueueLeaveEvent;
-import me.ceezuns.queue.events.PlayerQueuePushEvent;
-import me.ceezuns.queue.events.QueueStatusChangeEvent;
-import me.ceezuns.queue.priority.QueuePriority;
+import ca.anmolbrar.FeatherQueue;
+import ca.anmolbrar.queue.priority.QueuePriority;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;

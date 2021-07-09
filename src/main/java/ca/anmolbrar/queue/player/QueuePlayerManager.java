@@ -1,7 +1,7 @@
-package me.ceezuns.queue.player;
+package ca.anmolbrar.queue.player;
 
+import ca.anmolbrar.FeatherQueue;
 import com.google.common.base.Preconditions;
-import me.ceezuns.FeatherQueue;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 import java.util.Map;

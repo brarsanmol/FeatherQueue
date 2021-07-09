@@ -1,7 +1,7 @@
-package me.ceezuns.queue;
+package ca.anmolbrar.queue;
 
 import com.google.common.base.Preconditions;
-import me.ceezuns.FeatherQueue;
+import ca.anmolbrar.FeatherQueue;
 import net.md_5.bungee.config.Configuration;
 
 import java.util.ArrayList;

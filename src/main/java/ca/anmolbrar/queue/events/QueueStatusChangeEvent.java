@@ -1,7 +1,7 @@
-package me.ceezuns.queue.events;
+package ca.anmolbrar.queue.events;
 
-import me.ceezuns.queue.Queue;
-import me.ceezuns.queue.QueueStatus;
+import ca.anmolbrar.queue.Queue;
+import ca.anmolbrar.queue.QueueStatus;
 import net.md_5.bungee.api.plugin.Event;
 
 public class QueueStatusChangeEvent extends Event {

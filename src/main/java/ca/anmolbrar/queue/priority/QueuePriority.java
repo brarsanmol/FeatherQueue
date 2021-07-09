@@ -1,7 +1,7 @@
-package me.ceezuns.queue.priority;
+package ca.anmolbrar.queue.priority;
 
+import ca.anmolbrar.FeatherQueue;
 import com.google.common.base.Preconditions;
-import me.ceezuns.FeatherQueue;
 
 import java.util.logging.Level;
 

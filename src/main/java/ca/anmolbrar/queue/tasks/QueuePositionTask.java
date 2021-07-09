@@ -1,7 +1,7 @@
-package me.ceezuns.queue.tasks;
+package ca.anmolbrar.queue.tasks;
 
-import me.ceezuns.FeatherQueue;
-import me.ceezuns.queue.Queue;
+import ca.anmolbrar.FeatherQueue;
+import ca.anmolbrar.queue.Queue;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.scheduler.ScheduledTask;

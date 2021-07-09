@@ -1,6 +1,6 @@
-package me.ceezuns.queue.events;
+package ca.anmolbrar.queue.events;
 
-import me.ceezuns.queue.Queue;
+import ca.anmolbrar.queue.Queue;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class PlayerQueueLeaveEvent extends PlayerQueueEvent {
